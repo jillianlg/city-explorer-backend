@@ -5,7 +5,7 @@ const cors = require('cors');
 const request = require('superagent');
 const app = express();
 const port = 3000;
-const { mungeLocation, mungeWeather } = require('./utils.js');
+const { mungeLocation, mungeWeather, mungeHiking, mungeYelp } = require('./utils.js');
 
 app.use(cors());
 
@@ -38,36 +38,36 @@ app.get('/weather', async(req, res) => {
   }
 });
 
-// Yelp API
-// app.get('/yelp', async(req, res) => {
-//   try {
-//     const URL = 'https://api.yelp.com/v3/businesses/search?latitude={lat}&longitude={lng}';
-    
-//     const response = await request.get(URL);
-//     const yelpRes = mungeYelp(response.body);
-
-//     res.json(yelpRes);
-
-//   } catch(e) {
-//     res.json({ error: e.message });
-//   }
-// });
 
 // Hiking API
-// app.get('/hiking', async(req, res) => {
-//   try {
-//     const URL = 'https://www.hikingproject.com/data/get-trails?lat={lat}&lon={lng}&maxDistance=200&key={api-key}';
+app.get('/hiking', async(req, res) => {
+  try {
+    const URL = `https://www.hikingproject.com/data/get-trails?lat=lat=${req.query.latitude}&lon=${req.query.longitude}&key=${process.env.HIKING_Key}`;
 
-//     const response = await request.get(URL);
+    const response = await request.get(URL);
 
-//     const hikeRes = mungeHiking(response.body);
+    const hikeRes = mungeHiking(response.body);
 
-//     res.json(hikeRes);
-//   } catch(e) {
-//     res.json({ error: e.message });
-//   }
-// });
+    res.json(hikeRes);
+  } catch(e) {
+    res.json({ error: e.message });
+  }
+});
 
+// Yelp API
+app.get('/yelp', async(req, res) => {
+  try {
+    const URL = 'https://api.yelp.com/v3/businesses/search?latitude={lat}&longitude={lng}';
+    
+    const response = await request.get(URL);
+    const yelpRes = mungeYelp(response.body);
+
+    res.json(yelpRes);
+
+  } catch(e) {
+    res.json({ error: e.message });
+  }
+});
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);

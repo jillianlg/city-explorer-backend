@@ -1,18 +1,3 @@
-// Example code
-// function mungeMovie(movie) {
-//     return {
-//         name: movie.original_title,
-//         description: movie.overview,
-//         genre1: movie.genres[0].name,
-//         genre2: movie.genres[1] ? movie.genres[1].name : 'N/A',
-//         dir_name: Math.random() > .5 ? 'Steven Spielberg' : 'Rob Reiner'
-//     }; 
-// }
-
-// module.exports = {
-//     mungeMovie
-// }; 
-
 function mungeLocation(location) {
   return {
 
@@ -33,27 +18,42 @@ function mungeWeather(weather) {
 
 }
 
-// function mungeYelp(yelp) {
-//     return {
-  
-//       formatted_query: location[0].display_name,
-//       latitude: location[0].lat,
-//       longitude: location[0].lon
-  
-//     };
-//   }
+function mungeHiking(hiking) {
+  let hikingArry = hiking.trails.map((item) => {
+    return {
+      name: item.name,
+      location: item.location,
+      length: item.length,
+      stars: item.stars,
+      star_votes: item.starVotes,
+      summary: item.summary,
+      trail_url: item.url,
+      conditions: item.conditionStatus,
+      condition_date: item.conditionDate.split(' ')[0],
+      condition_time: item.conditionDate.split(' ')[1],
+    };
+  });
+  return hikingArry.slice(0, 10);
+}
 
-// function mungeHiking(hiking) {
-//     return {
+function mungeYelp(location) {
   
-//       formatted_query: location[0].display_name,
-//       latitude: location[0].lat,
-//       longitude: location[0].lon
-  
-//     };
-//   }
+  return location.businesses.map(item => {
+    return {
+      name: item.name,
+      image_url: item.image_url,
+      price: item.price,
+      rating: item.rating,
+      url: item.url
+    };
+  }).slice(0, 20);
+
+}
+
 
 module.exports = {
   mungeLocation, 
-  mungeWeather
+  mungeWeather,
+  mungeHiking,
+  mungeYelp
 };
