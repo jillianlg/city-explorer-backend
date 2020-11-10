@@ -31,7 +31,7 @@ describe('app routes', () => {
       return client.end(done);
     });
 
-  test('returns animals', async() => {
+  test('returns loaction data', async() => {
 
     const expectation = [
       {
