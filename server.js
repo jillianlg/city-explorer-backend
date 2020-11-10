@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const express = require('express');
-const cors = require('cors');gac ''
+const cors = require('cors');
 const request = require('superagent');
 const app = express();
 const port = 3000;
@@ -40,9 +40,9 @@ app.get('/weather', async(req, res) => {
 
 
 // Hiking API
-app.get('/hiking', async(req, res) => {
+app.get('/trails', async(req, res) => {
   try {
-    const URL = `https://www.hikingproject.com/data/get-trails?lat=lat=${req.query.latitude}&lon=${req.query.longitude}&key=${process.env.HIKING_Key}`;
+    const URL = `https://www.hikingproject.com/data/get-trails?lat=${req.query.latitude}&lon=${req.query.longitude}&key=${process.env.HIKING_Key}`;
 
     const response = await request.get(URL);
 
@@ -55,11 +55,12 @@ app.get('/hiking', async(req, res) => {
 });
 
 // Yelp API
-app.get('/yelp', async(req, res) => {
+app.get('/reviews', async(req, res) => {
   try {
-    const URL = 'https://api.yelp.com/v3/businesses/search?latitude={lat}&longitude={lng}';
+    const URL = `https://api.yelp.com/v3/businesses/search?latitude=${req.query.latitude}&longitude=${req.query.longitude}`;
     
-    const response = await request.get(URL);
+    const response = await request.get(URL)
+    .set('Authorization', `Bearer ${process.env.YELP_Key}`);
     const yelpRes = mungeYelp(response.body);
 
     res.json(yelpRes);
