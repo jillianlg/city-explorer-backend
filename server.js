@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const express = require('express');
-const cors = require('cors');
+const cors = require('cors');gac ''
 const request = require('superagent');
 const app = express();
 const port = 3000;
