@@ -24,32 +24,46 @@ app.get('/location', async(req, res) => {
 });
 
 // Weather API
-// app.get('/weather', async (req, res) => {
-//   const URL = 'https://api.weatherbit.io/v2.0/forecast/daily?&lat=38.123&lon=-78.543&key={api-key}';
+// app.get('/weather', async(req, res) => {
+//   try {
+//     const URL = 'https://api.weatherbit.io/v2.0/forecast/daily?&lat=38.123&lon=-78.543&key={api-key}';
 
-//   const response = await request.get(URL);
-//   res.json(response.body);
+//     const response = await request.get(URL);
+//     const weatherRes = mungeWeather(response.body);
+
+//     res.json(weatherRes);
+//   }
+//   catch(e) {
+//     res.json({ error: e.message });
+//   }
 // });
 
 // Yelp API
-// app.get('/yelp', async (req, res) => {
-//   const URL = 'https://api.yelp.com/v3/businesses/search?latitude={lat}&longitude={lng}';
+// app.get('/yelp', async(req, res) => {
+//   try {
+//     const URL = 'https://api.yelp.com/v3/businesses/search?latitude={lat}&longitude={lng}';
+    
+//     const response = await request.get(URL);
+//     const yelpRes = mungeYelp(response.body);
 
-//   const response = await request.get(URL);
-//   res.json(response.body);
+//     res.json(yelpRes);
+
+//   } catch(e) {
+//     res.json({ error: e.message });
+//   }
 // });
 
 // Hiking API
-// app.get('/hiking', async (req, res) => {
+// app.get('/hiking', async(req, res) => {
 //   try {
 //     const URL = 'https://www.hikingproject.com/data/get-trails?lat={lat}&lon={lng}&maxDistance=200&key={api-key}';
 
 //     const response = await request.get(URL);
 
-//     const locRes = mungeLocation(response.body);
+//     const hikeRes = mungeHiking(response.body);
 
-//     res.json(locRes);
-//   } catch (e) {
+//     res.json(hikeRes);
+//   } catch(e) {
 //     res.json({ error: e.message });
 //   }
 // });
