@@ -24,12 +24,13 @@ function mungeLocation(location) {
 }
 
 function mungeWeather(weather) {
-  weather.data.map(item => {
+  return weather.data.map(item => {
     return {
       forecast: item.weather.description,
       time: item.datetime,
     };
   }).slice(0, 8);
+
 }
 
 // function mungeYelp(yelp) {

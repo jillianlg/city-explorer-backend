@@ -12,7 +12,7 @@ app.use(cors());
 // Location API
 app.get('/location', async(req, res) => {
   try {
-    const URL = `https://us1.locationiq.com/v1/search.php?key=${process.env.LOCATIONIQ_Key}&q=${req.query.location}&format=json`;
+    const URL = `https://us1.locationiq.com/v1/search.php?key=${process.env.LOCATIONIQ_Key}&q=${req.query.search}&format=json`;
 
     const response = await request.get(URL);
     const locRes = mungeLocation(response.body);
