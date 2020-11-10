@@ -5,14 +5,14 @@ const cors = require('cors');
 const request = require('superagent');
 const app = express();
 const port = 3000;
-const { mungeLocation } = require('utils.js');
+const { mungeLocation, mungeWeather } = require('./utils.js');
 
 app.use(cors());
 
 // Location API
 app.get('/location', async(req, res) => {
   try {
-    const URL = 'https://us1.locationiq.com/v1/search.php?key={api-key}&q={city-name}&format=json';
+    const URL = `https://us1.locationiq.com/v1/search.php?key=${process.env.LOCATIONIQ_Key}&q=${req.query.location}&format=json`;
 
     const response = await request.get(URL);
     const locRes = mungeLocation(response.body);
@@ -24,19 +24,19 @@ app.get('/location', async(req, res) => {
 });
 
 // Weather API
-// app.get('/weather', async(req, res) => {
-//   try {
-//     const URL = 'https://api.weatherbit.io/v2.0/forecast/daily?&lat=38.123&lon=-78.543&key={api-key}';
+app.get('/weather', async(req, res) => {
+  try {
+    const URL = `https://api.weatherbit.io/v2.0/forecast/daily?lat=${req.query.latitude}&lon=${req.query.longitude}&key=${process.env.WEATHERBIT_Key}`;
 
-//     const response = await request.get(URL);
-//     const weatherRes = mungeWeather(response.body);
+    const response = await request.get(URL);
+    const weatherRes = mungeWeather(response.body);
 
-//     res.json(weatherRes);
-//   }
-//   catch(e) {
-//     res.json({ error: e.message });
-//   }
-// });
+    res.json(weatherRes);
+  }
+  catch(e) {
+    res.json({ error: e.message });
+  }
+});
 
 // Yelp API
 // app.get('/yelp', async(req, res) => {

@@ -23,6 +23,36 @@ function mungeLocation(location) {
   };
 }
 
+function mungeWeather(weather) {
+  weather.data.map(item => {
+    return {
+      forecast: item.weather.description,
+      time: item.datetime,
+    };
+  }).slice(0, 8);
+}
+
+// function mungeYelp(yelp) {
+//     return {
+  
+//       formatted_query: location[0].display_name,
+//       latitude: location[0].lat,
+//       longitude: location[0].lon
+  
+//     };
+//   }
+
+// function mungeHiking(hiking) {
+//     return {
+  
+//       formatted_query: location[0].display_name,
+//       latitude: location[0].lat,
+//       longitude: location[0].lon
+  
+//     };
+//   }
+
 module.exports = {
-  mungeLocation
+  mungeLocation, 
+  mungeWeather
 };
